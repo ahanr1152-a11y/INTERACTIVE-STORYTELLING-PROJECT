@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Storytelling</title>
+  <style>
+    /* Use the upgraded CSS we made earlier */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(rgba(0,0,0,0.75),rgba(0,0,0,0.75)),url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ47eew1jp9Q6_SvB5-tinPfwziew3gIRpqPqV0qww_xQ&s=10');
+      background-size: cover;
+      background-position: center;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #bb86fc;
+      text-shadow: 0 0 15px rgba(187,134,252,0.8);
+      margin-bottom: 20px;
+      letter-spacing: 2px;
+    }
+    .story {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(187,134,252,0.3);
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 700px;
+      font-size: 1.2em;
+      line-height: 1.8;
+      box-shadow: 0 0 20px rgba(187,134,252,0.2);
+      backdrop-filter: blur(6px);
+      transition: transform 0.3s ease;
+    }
+    .story:hover { transform: scale(1.02); }
+    .choices { margin-top: 25px; }
+    button {
+      background: linear-gradient(135deg, #bb86fc, #6200ee);
+      border: none;
+      padding: 12px 25px;
+      margin: 12px;
+      color: #fff;
+      font-weight: bold;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 12px rgba(187,134,252,0.6);
+    }
+    button:hover {
+      background: linear-gradient(135deg, #6200ee, #3700b3);
+      transform: translateY(-3px);
+      box-shadow: 0 0 20px rgba(187,134,252,0.9);
+    }
+    .fade { animation: fadeIn 0.8s ease-in-out; }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(15px);} to{opacity:1; transform:translateY(0);} }
+  </style>
+</head>
+<body>
+  <h1>🌌 StoryVerse</h1>
+
+  <!-- Story container -->
+  <div id="story" class="story fade">
+    <p>Choose a story to begin your adventure:</p>
+  </div>
+
+  <!-- Choices -->
+  <div id="choices" class="choices">
+    <button onclick="startStory('forest')">Mystical Forest</button>
+    <button onclick="startStory('space')">Journey to Space</button>
+    <button onclick="startStory('castle')">Haunted Castle</button>
+  </div>
+
+  <script>
+    function startStory(storyName) {
+      if (storyName === 'forest') {
+        document.getElementById('story').innerHTML = "<p>You wake up in a mysterious forest under a starry sky. Do you explore deeper into the woods or follow a glowing path?</p>";
+        document.getElementById('choices').innerHTML = `
+          <button onclick="choose('woods')">Explore the Woods</button>
+          <button onclick="choose('path')">Follow the Path</button>
+        `;
+      }
+      if (storyName === 'space') {
+        document.getElementById('story').innerHTML = "<p>You are aboard a spaceship heading to Mars. Suddenly, alarms blare. Do you investigate the engine room or contact mission control?</p>";
+        document.getElementById('choices').innerHTML = `
+          <button onclick="choose('engine')">Go to Engine Room</button>
+          <button onclick="choose('control')">Contact Mission Control</button>
+        `;
+      }
+      if (storyName === 'castle') {
+        document.getElementById('story').innerHTML = "<p>You enter a haunted castle. The air is cold and eerie. Do you climb the tower or explore the dungeon?</p>";
+        document.getElementById('choices').innerHTML = `
+          <button onclick="choose('tower')">Climb the Tower</button>
+          <button onclick="choose('dungeon')">Explore the Dungeon</button>
+        `;
+      }
+    }
+
+    function choose(option) {
+      const story = document.getElementById('story');
+      const choices = document.getElementById('choices');
+
+      // Forest story branches
+      if (option === 'woods') {
+        story.innerHTML = "<p>You venture into the woods and find a hidden door in a tree. Do you open it or run away?</p>";
+        choices.innerHTML = `<button onclick="choose('door')">Open the Door</button><button onclick="choose('run')">Run Away</button>`;
+      }
+      if (option === 'path') {
+        story.innerHTML = "<p>You follow the glowing path to a shimmering lake. A mystical figure offers you knowledge or power. Which do you take?</p>";
+        choices.innerHTML = `<button onclick="choose('knowledge')">Knowledge</button><button onclick="choose('power')">Power</button>`;
+      }
+      if (option === 'door') {
+        story.innerHTML = "<p>You discover a hidden library filled with ancient books. ✨ The End.</p>";
+        choices.innerHTML = `<button onclick="restart()">Restart</button>`;
+      }
+      if (option === 'run') {
+        story.innerHTML = "<p>You escape the whispers, but the forest always calls you back... 🌲 The End.</p>";
+        choices.innerHTML = `<button onclick="restart()">Restart</button>`;
+      }
+      if (option === 'knowledge') {
+        story.innerHTML = "<p>You gain wisdom beyond imagination. 🌌 The End.</p>";
+        choices.innerHTML = `<button onclick="restart()">Restart</button>`;
+      }
+      if (option === 'power') {
+        story.innerHTML = "<p>You gain immense power, but with great responsibility. ⚡ The End.</p>";
+        choices.innerHTML = `<button onclick="restart()">Restart</button>`;
+      }
+
+      // Space story branches
+      if (option === 'engine') {
+        story.innerHTML = "<p>You rush to the engine room and fix the malfunction just in time. Humanity is saved! 🚀 The End.</p>";
+        choices.innerHTML = `<button onclick="restart()">Restart</button>`;
+      }
+      if (option === 'control') {
+        story.innerHTML = "<p>You contact mission control, but the signal is weak. The ship drifts into the unknown... 🌌 The End.</p>";
+        choices.innerHTML = `<button onclick="restart()">Restart</button>`;
+      }
+
+      // Castle story branches
+      if (option === 'tower') {
+        story.innerHTML = "<p>You climb the tower and find a ghostly knight guarding a treasure. He lets you pass. 🏰 The End.</p>";
+        choices.innerHTML = `<button onclick="restart()">Restart</button>`;
+      }
+      if (option === 'dungeon') {
+        story.innerHTML = "<p>You explore the dungeon and awaken ancient spirits. They surround you... 👻 The End.</p>";
+        choices.innerHTML = `<button onclick="restart()">Restart</button>`;
+      }
+    }
+
+    function restart() {
+      document.getElementById('story').innerHTML = "<p>Choose a story to begin your adventure:</p>";
+      document.getElementById('choices').innerHTML = `
+        <button onclick="startStory('forest')">Mystical Forest</button>
+        <button onclick="startStory('space')">Journey to Space</button>
+        <button onclick="startStory('castle')">Haunted Castle</button>
+      `;
+    }
+  </script>
+</body>
+</html>
